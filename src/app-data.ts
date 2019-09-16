@@ -7,6 +7,7 @@ export enum EffortType {
 export enum ScalingType {
   Reps,
   Time,
+  Distance,
 }
 
 export enum EquipmentType {
@@ -38,12 +39,6 @@ export const Movements = [
   },
   {
     name: 'Seated dumbbell shoulder press',
-    equipmentType: EquipmentType.Dumbbell,
-    effortType: EffortType.Weight,
-    scalingType: ScalingType.Reps,
-  },
-  {
-    name: 'Incline bench row/ER/press',
     equipmentType: EquipmentType.Dumbbell,
     effortType: EffortType.Weight,
     scalingType: ScalingType.Reps,
@@ -84,6 +79,30 @@ export const Movements = [
     effortType: EffortType.Weight,
     scalingType: ScalingType.Reps,
   },
+  {
+    name: 'Hanging knee raises',
+    equipmentType: EquipmentType.None,
+    effortType: EffortType.Bodyweight,
+    scalingType: ScalingType.Reps,
+  },
+  {
+    name: 'Rowing machine',
+    equipmentType: EquipmentType.Machine,
+    effortType: EffortType.Pace,
+    scalingType: ScalingType.Distance,
+  },
+  {
+    name: 'Box jumps (red & black)',
+    equipmentType: EquipmentType.None,
+    effortType: EffortType.Bodyweight,
+    scalingType: ScalingType.Reps,
+  },
+  {
+    name: 'Dips',
+    equipmentType: EquipmentType.None,
+    effortType: EffortType.Bodyweight,
+    scalingType: ScalingType.Reps,
+  },
 ] as const
 
 export type MovementNames = typeof Movements[number]['name']
@@ -92,17 +111,29 @@ export function getMovementByName(name: MovementNames) {
   return Movements.find(m => m.name === name)!
 }
 
+export type WorkoutMove = {
+  move: typeof Movements[number]
+} & (
+  | {
+      reps: number
+      weightLbs: number | 'BW'
+    }
+  | {
+      distance: number
+      pace: string
+    }
+  | {
+      time: number
+      pace: string
+    })
+
 export type Week = {
   title: string
   days: {
     workouts: {
       sets: number
       restSeconds: number
-      moves: {
-        move: typeof Movements[number]
-        reps: number
-        weightLbs: number
-      }[]
+      moves: WorkoutMove[]
     }[]
   }[]
 }
@@ -149,9 +180,9 @@ const week1: Week = {
               reps: 10,
             },
             {
-              move: getMovementByName('Incline bench row/ER/press'),
-              weightLbs: 50,
-              reps: 10,
+              move: getMovementByName('Hanging knee raises'),
+              weightLbs: 'BW',
+              reps: 30,
             },
           ],
         },
@@ -181,8 +212,8 @@ const week1: Week = {
               reps: 10,
             },
             {
-              move: getMovementByName('Decline push ups'),
-              weightLbs: 0,
+              move: getMovementByName('Dips'),
+              weightLbs: 'BW',
               reps: 10,
             },
           ],
@@ -192,13 +223,13 @@ const week1: Week = {
           restSeconds: 90,
           moves: [
             {
-              move: getMovementByName('Incline dumbbell chest press'),
-              weightLbs: 60,
-              reps: 10,
+              move: getMovementByName('Rowing machine'),
+              pace: '2 mins / 500m',
+              distance: 500,
             },
             {
-              move: getMovementByName('Machine fly'),
-              weightLbs: 60,
+              move: getMovementByName('Box jumps (red & black)'),
+              weightLbs: 'BW',
               reps: 10,
             },
           ],

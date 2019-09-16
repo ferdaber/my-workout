@@ -1,6 +1,6 @@
 import React from 'react'
 import { RouteComponentProps } from 'react-router'
-import AppData, { EffortType } from 'app-data'
+import AppData, { EffortType, WorkoutMove } from 'app-data'
 import css from '@emotion/css'
 import { bgBlue } from 'ui/colors'
 import { flexContainer } from 'ui/helpers'
@@ -9,6 +9,22 @@ import { AppLink } from 'ui/Button'
 import { getRoute } from 'Routes'
 
 type Props = RouteComponentProps<{ day: string; week: string }> & {}
+
+function Move(m: WorkoutMove) {
+  if ('reps' in m) {
+    return (
+      <>
+        {m.reps} x {m.move.effortType === EffortType.Weight ? `${m.weightLbs}lbs` : 'BW'} of{' '}
+        <em>{m.move.name}</em>
+      </>
+    )
+  }
+  return (
+    <>
+      {'distance' in m ? `${m.distance} m` : `${m.time} mins`} at {m.pace} of <em>{m.move.name}</em>
+    </>
+  )
+}
 
 export function Day({ match: { params } }: Props) {
   const week = Number(params.week)
@@ -34,8 +50,7 @@ export function Day({ match: { params } }: Props) {
             <ul>
               {w.moves.map((m, i) => (
                 <li key={i} css={{ '&:not(:last-child)': { marginBottom: 8 } }}>
-                  {m.reps} x {m.move.effortType === EffortType.Weight ? `${m.weightLbs}lbs` : 'BW'}{' '}
-                  of <em>{m.move.name}</em>
+                  <Move {...m} />
                 </li>
               ))}
             </ul>
