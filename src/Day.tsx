@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { RouteComponentProps } from 'react-router'
 import AppData, { EffortType, WorkoutMove } from 'app-data'
 import css from '@emotion/css'
@@ -9,6 +9,12 @@ import { AppLink } from 'ui/Button'
 import { getRoute } from 'Routes'
 
 type Props = RouteComponentProps<{ day: string; week: string }> & {}
+
+function getWarmupNumbers(m: WorkoutMove) {
+  if (!('weightLbs' in m) || typeof m.weightLbs !== 'number') return
+  const weight = m.weightLbs
+  return [0.6, 0.7, 0.8, 0.9].map(n => Math.round((weight / 5) * n) * 5).join('/')
+}
 
 function Move(m: WorkoutMove) {
   if ('reps' in m) {
@@ -32,11 +38,11 @@ export function Day({ match: { params } }: Props) {
   const { workouts } = AppData.weeks[week].days[day]
   return (
     <>
-      {workouts.map((w, i) => (
+      {workouts.map((w, wIdx) => (
         <div
-          key={i}
+          key={wIdx}
           css={css`
-            background: ${i % 2 === 0 ? bgBlue : 'white'};
+            background: ${wIdx % 2 === 0 ? bgBlue : 'white'};
           `}
         >
           <div
@@ -47,11 +53,18 @@ export function Day({ match: { params } }: Props) {
             `}
           >
             <div css={{ flex: 'none', marginRight: 12 }}>{w.sets} sets</div>
-            <ul>
-              {w.moves.map((m, i) => (
-                <li key={i} css={{ '&:not(:last-child)': { marginBottom: 8 } }}>
-                  <Move {...m} />
-                </li>
+            <ul css={{ 'li:not(:last-child)': { marginBottom: 8 } }}>
+              {w.moves.map((m, mIdx) => (
+                <Fragment key={mIdx}>
+                  {mIdx === 0 && wIdx === 0 && (
+                    <li>
+                      Warmup ({getWarmupNumbers(m)} lbs) of <em>{m.move.name}</em>
+                    </li>
+                  )}
+                  <li>
+                    <Move {...m} />
+                  </li>
+                </Fragment>
               ))}
             </ul>
           </div>
