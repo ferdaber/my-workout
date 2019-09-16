@@ -219,6 +219,7 @@ module.exports = /** @type {import('webpack').Configuration} */ ({
     // dev server serves what is outputted into the build directory
     // it still stores everything in memory though
     contentBase: buildDir,
+    historyApiFallback: true,
   },
   // always use source-map to allow CSS source maps in dev mode
   devtool: 'source-map',

@@ -1,16 +1,16 @@
 import 'core-js'
 import React from 'react'
-import { render } from 'react-dom'
 import { css } from '@emotion/core'
+import { render } from 'react-dom'
+import { globalStyles } from 'GlobalStyles'
+import { App } from 'App'
 
-const styles = css`
-  font-weight: bold;
-`
+window['css'] = css
 
-const App = () => (
-  <div className="global-class container mx-auto text-center py-4" css={styles}>
-    Hi!
-  </div>
+render(
+  <>
+    {globalStyles}
+    <App />
+  </>,
+  document.getElementById('root')
 )
-
-render(<App />, document.getElementById('root'))

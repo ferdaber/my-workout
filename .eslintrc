@@ -23,6 +23,9 @@
     "es6": true,
     "node": true
   },
+  "globals": {
+    "css": true
+  },
   "rules": {
     "no-console": "off",
     "no-unused-vars": "off",
