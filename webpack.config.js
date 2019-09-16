@@ -167,6 +167,10 @@ module.exports = /** @type {import('webpack').Configuration} */ ({
         to: path.resolve(buildDir, 'static'),
         ignore: 'index.html',
       },
+      {
+        from: '_redirects',
+        to: buildDir,
+      },
     ]),
   ],
   optimization: {
