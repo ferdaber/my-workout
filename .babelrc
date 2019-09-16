@@ -1,0 +1,34 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "loose": true,
+        "modules": false,
+        "corejs": {
+          "version": 3,
+          "proposals": true
+        },
+        "targets": {
+          "chrome": 69,
+          "safari": 12,
+          "firefox": 57
+        }
+      }
+    ],
+    "@babel/preset-typescript",
+    "@emotion/babel-preset-css-prop"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "decoratorsBeforeExport": true
+      }
+    ],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-throw-expressions",
+    "@babel/plugin-proposal-numeric-separator"
+  ]
+}
