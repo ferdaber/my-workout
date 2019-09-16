@@ -73,6 +73,7 @@ const getButtonStyle = ({
   text-align: center;
   padding: ${yPadding[size]}px ${xPadding[size]}px;
   background-color: ${type === ButtonType.Default ? colors[variant] : 'none'};
+  border-style: solid;
   border-color: ${type === ButtonType.Default ? 'none' : colors[variant]};
   border-width: ${type === ButtonType.Default ? 0 : 2}px;
   border-radius: 2px;

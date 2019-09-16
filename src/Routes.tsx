@@ -4,6 +4,8 @@ import { lazyLoad } from '@ferdaber/utils'
 import { flexContainer, cssSize } from 'ui/helpers'
 
 const Home = lazyLoad(() => import('Home').then(m => m.Home))
+const Warmups = lazyLoad(() => import('Warmups').then(m => m.Warmups))
+const Cooldown = lazyLoad(() => import('Cooldown').then(m => m.Cooldown))
 const Week = lazyLoad(() => import('Week').then(m => m.Week))
 
 export function Routes() {
@@ -12,6 +14,8 @@ export function Routes() {
       <BrowserRouter>
         <Switch>
           <Route exact component={Home} path="/" />
+          <Route component={Warmups} path="/warmup" />
+          <Route component={Cooldown} path="/cooldown" />
           <Route component={Week} path="/week/:week" />
         </Switch>
       </BrowserRouter>
@@ -25,5 +29,11 @@ export const getRoute = {
   },
   day(weekNumber: number, dayNumber: number) {
     return `${getRoute.week(weekNumber)}/day/${dayNumber}`
+  },
+  warmup() {
+    return `/warmup`
+  },
+  cooldown() {
+    return `/cooldown`
   },
 }

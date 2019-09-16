@@ -21,7 +21,17 @@ export function Week({ match: { params } }: Props) {
       <div css={{ flex: '1 0 0', minHeight: 0, overflowY: 'auto' }}>
         <Switch>
           <Route exact path="/week/:week">
-            <div css={flexContainer('center', 'center', 'column')}>
+            <div
+              css={css`
+                display: grid;
+                grid-template-columns: max-content;
+                grid-gap: 16px 0;
+                justify-content: center;
+              `}
+            >
+              <AppLink to={getRoute.warmup()} type={AppLink.Type.Ghost}>
+                Warmup
+              </AppLink>
               {days.map((_, i) => (
                 <AppLink key={i} to={getRoute.day(week, i)}>
                   Day {i + 1}

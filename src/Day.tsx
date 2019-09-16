@@ -5,6 +5,8 @@ import css from '@emotion/css'
 import { bgBlue } from 'ui/colors'
 import { flexContainer } from 'ui/helpers'
 import { fontSizeSmall } from 'ui/typo'
+import { AppLink } from 'ui/Button'
+import { getRoute } from 'Routes'
 
 type Props = RouteComponentProps<{ day: string; week: string }> & {}
 
@@ -43,6 +45,11 @@ export function Day({ match: { params } }: Props) {
           </div>
         </div>
       ))}
+      <div css={flexContainer()}>
+        <AppLink to={getRoute.cooldown()} variant={AppLink.Variant.Secondary}>
+          Cooldown
+        </AppLink>
+      </div>
     </>
   )
 }
